@@ -2,13 +2,13 @@
 #include <robo_hardware2.h>
 #include <main.h>
 
-float delayOne = 0;
-float delayTwo = 500;
+float delayOne = 500;
+float delayTwo = 600;
 
-int pinMaisEsq = 0;
-int pinEsq = 1;
-int pinDir = 2;
-int pinMaisDir = 3;
+int pinMaisEsq = 3;
+int pinEsq = 2;
+int pinDir = 1;
+int pinMaisDir = 0;
 
 calibracao_dados val;
 bool desafio = false;
@@ -189,30 +189,27 @@ void initSeguirLinha() {
     if (sensores[0] > valorCorte[0] && sensores[1] > valorCorte[1] && sensores[2] < valorCorte[2] && sensores[3] < valorCorte[3]) { // PPBB        
         Serial.println("====CURVA À ESQUERDA====");
         delay(delayOne);
-        robo.acionarMotores(-40,40);
+        robo.acionarMotores(25,-25);
         delay(delayTwo);
     } else if (sensores[0] < valorCorte[0] && sensores[1] < valorCorte[1] && sensores[2] > valorCorte[2] && sensores[3] > valorCorte[3]) { // BBPP        
         Serial.println("====CURVA À DIREITA====");
         delay(delayOne);
-        robo.acionarMotores(40,-40);    
+        robo.acionarMotores(25,25);    
         delay(delayTwo);
     } else if (sensores[2] < valorCorte[2] && sensores[1] > valorCorte[1]){ // DIR = branco e ESQ = preto        
         Serial.println("====CURVA À ESQUERDA====");
-        robo.acionarMotores(40,-40); // Curva à esquerda
-        delay(delayCurva);
+        robo.acionarMotores(-25,25); // Curva à esquerda        
     } else if (sensores[2] > valorCorte[2] && sensores[1] < valorCorte[1]){ // DIR = preto e ESQ = branco            
         Serial.println("====CURVA À DIREITA====");
-        robo.acionarMotores(-40,40); // Curva à direita
+        robo.acionarMotores(25,-25); // Curva à direita
     } else if (sensores[3] > valorCorte[3] && sensores[0] < valorCorte[0]) { // +DIR = preto ou +ESQ = branco        
         Serial.println("====CURVA À ESQUERDA====");
-        robo.acionarMotores(-40,40);        
+        robo.acionarMotores(25,-25);        
     } else if (sensores[3] < valorCorte[3] && sensores[0] > valorCorte[0]) { // +DIR = branco e +ESQ = preto                
         Serial.println("====CURVA À DIREITA====");
-        robo.acionarMotores(40,-40);        
-        delay(delayCurva);
+        robo.acionarMotores(-25,25);                
     } else if(sensores[0] > valorCorte[0] && sensores[3] > valorCorte[3]) {        
         robo.acionarMotores(30,40);
-        delay(delayCurva);
     } else if (sensores[1] < valorCorte[0] && sensores[2] < valorCorte[2]) {
         robo.acionarMotores(30,40);
     }
